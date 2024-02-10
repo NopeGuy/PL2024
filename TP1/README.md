@@ -1,5 +1,6 @@
-TP1
-Autor: Luís Ferreira, a91672
+# TP1
+
+**Autor:** Luís Ferreira, a91672
 ## Parser simples de csv para tratamento de dados usando python.
 Este projeto desenvolve um programa Python dedicado à **análise de dados** armazenados em **CSV**. A estrutura do código é dividida em três partes fundamentais: **Parser, DataManagement** e o programa principal.
 
