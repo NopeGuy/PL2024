@@ -2,7 +2,7 @@ import os
 
 def parse_data():
     script_directory = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_directory, '..', 'Data', 'emd.csv')
+    file_path = os.path.join(script_directory, '..', 'data', 'emd.csv')
     full_path = os.path.abspath(file_path)
 
     athletes = []
