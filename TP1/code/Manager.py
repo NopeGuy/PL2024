@@ -32,10 +32,10 @@ class Main:
                 # Distribuição de atletas por escalão etário (escalão = intervalo de 5 anos): ... [30-34], [35-39], ...
                 dist = age_distribution(athletes)
                 print()
-                print("The percentage of athletes between 20 and 24 years is " + str(dist[0]) + "%")
-                print("The percentage of athletes between 25 and 29 years is " + str(dist[1]) + "%")
-                print("The percentage of athletes between 30 and 34 years is " + str(dist[2]) + "%")
-                print("The percentage of athletes between 35 and 39 years is " + str(dist[3]) + "%")
+                print("There are " + str(dist[4]) + " athletes between 20 and 24 years and their percentage is " + str(dist[0]) + "%")
+                print("There are " + str(dist[5]) + " athletes between 20 and 24 years and their percentage is " + str(dist[1]) + "%")
+                print("There are " + str(dist[6]) + " athletes between 20 and 24 years and their percentage is " + str(dist[2]) + "%")
+                print("There are " + str(dist[7]) + " athletes between 20 and 24 years and their percentage is " + str(dist[3]) + "%")
                 pass
             elif user_choice == '0':
                 break

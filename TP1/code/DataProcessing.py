@@ -52,4 +52,8 @@ def age_distribution(athletes):
     dist_list.append(round(dist3, 2))
     dist4 = len(range4) / len(total) * 100
     dist_list.append(round(dist4, 2))
+    dist_list.append(len(range1))
+    dist_list.append(len(range2))
+    dist_list.append(len(range3))
+    dist_list.append(len(range4))
     return dist_list
