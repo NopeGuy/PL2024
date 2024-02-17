@@ -36,7 +36,7 @@ class RegexConvFull:
         markdown_text = re.sub(md["bold"], r'<b>\1</b>', markdown_text)
 
         # Converter Blockquote
-        markdown_text = re.sub(md["blockquote"], r'\n<blockquote>\1</blockquote>', markdown_text)
+        markdown_text = re.sub(md["blockquote"], r'\n\n<blockquote>\1</blockquote>', markdown_text)
 
         # Converter Listas
         markdown_text = re.sub(md["orderedList"], r'\n<ol>\n<li>\1</li>\n</ol>', markdown_text)
@@ -48,10 +48,10 @@ class RegexConvFull:
         # Converter Linha Horizontal
         markdown_text = re.sub(md["horizontalRule"], r'<hr>', markdown_text)
 
-        # Converter Links
-        markdown_text = re.sub(md["link"], r'<a href="\2">\1</a>', markdown_text)
-
         # Converter Imagens
         markdown_text = re.sub(md["image"], r'<img src="\2" alt="\1">', markdown_text)
+
+        # Converter Links
+        markdown_text = re.sub(md["link"], r'<a href="\2">\1</a>', markdown_text)
 
         return markdown_text

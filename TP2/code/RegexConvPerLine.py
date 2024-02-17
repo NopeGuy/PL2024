@@ -1,55 +1,76 @@
 import re
 
-class RegexConv:
+class RegexConvPerLine:
     
-    def markdown_to_html(markdown_text):
-        
-        # Não dá para usar carrots (^) ou dollars sign ($) pq ele lê o ficheiro inteiro em vez de linha a linha
-        # Faz isso para poder criar a lista mais facilmente
+    @staticmethod
+    def markdown_to_html(file_path):
         md = {
-            "h1" : re.compile(r'#{1} (.+)'),
-            "h1goat" : re.compile(r'(?<!#)#{1}(?!#) (.+)'),
-            "h2" : re.compile(r'#{2} (.+)'),
-            "h2goat" : re.compile(r'(?<!#)#{2}(?!#) (.+)'),
-            "h3" : re.compile(r'#{3} (.+)'),
-            "h3goat" : re.compile(r'(?<!#)#{3}(?!#) (.+)'),
-            "bold" : re.compile(r'\*{2}(.+)\*{2}'),
-            "italic" : re.compile(r'\*(.+)\*'),
-            "italicgoat" : re.compile(r'(?<!\*)\*(?![*])([^*]*[^*])\*(?!\*)'),
-            "blockquote" : re.compile(r'\n+ *>+(.*)')
-            
-            
+            "h1": re.compile(r'#\s*(.+)'),
+            "h2": re.compile(r'##\s*(.+)'),
+            "h3": re.compile(r'###\s*(.+)'),
+            "bold": re.compile(r'\*\*(.+?)\*\*'),
+            "italic": re.compile(r'\*(.+?)\*'),
+            "italicgoat": re.compile(r'\*(?![*])([^*]*[^*])\*(?!\*)'),
+            "blockquote": re.compile(r'(?<!.)>\s*(.+)'),
+            "orderedList": re.compile(r'\d+\. (.+)'),
+            "unorderedList": re.compile(r'\- (.+)'),
+            "code": re.compile(r'`(.+)`'),
+            "horizontalRule": re.compile(r'---'),
+            "link": re.compile(r'\[([^\]]+)\]\(([^\)]+)\)'),
+            "image": re.compile(r'!\[([^\]]+)\]\(([^\)]+)\)')
         }
         
-        # Converter Títulos
-        markdown_text = re.sub(md["h1goat"], r'<h1>\1</h1>', markdown_text)
-        markdown_text = re.sub(md["h2goat"], r'<h2>\1</h2>', markdown_text)
-        markdown_text = re.sub(md["h3goat"], r'<h3>\1</h3>', markdown_text)
-        
-        # Converter Negrito e Itálico
-        # se for usado o italico simples, tem de ser depois do bold pq captura a mesma sequencia
-        markdown_text = re.sub(md["italicgoat"], r'<em>\1</em>', markdown_text)
-        markdown_text = re.sub(md["bold"], r'<b>\1</b>', markdown_text)
+        file = open(file_path, "r")
+        converted_lines = []
 
-        # Converter Blockquote
-        markdown_text = re.sub(md["blockquote"], r'\n<blockquote>\1</blockquote>', markdown_text)
+        current_list_type = None
 
-        
-        # Converter Listas
+        for line in file:
+            markdown_text = line
+            
+            # Convert Títulos
+            markdown_text = re.sub(md["h3"], r'<h3>\1</h3>', markdown_text)
+            markdown_text = re.sub(md["h2"], r'<h2>\1</h2>', markdown_text)
+            markdown_text = re.sub(md["h1"], r'<h1>\1</h1>', markdown_text)
+            
+            # Convert Negrito e Itálico
+            markdown_text = re.sub(md["bold"], r'<b>\1</b>', markdown_text)
+            markdown_text = re.sub(md["italic"], r'<em>\1</em>', markdown_text)
+            
+            # Convert Blockquote
+            markdown_text = re.sub(md["blockquote"], r'<blockquote>\1</blockquote>', markdown_text)
+            
+            # Convert Listas
+            if re.match(md["orderedList"], line):
+                if current_list_type != "ol":
+                    converted_lines.append('<ol>')
+                    current_list_type = "ol"
+                markdown_text = re.sub(md["orderedList"], r'<li>\1</li>', markdown_text)
+            elif re.match(md["unorderedList"], line):
+                if current_list_type != "ul":
+                    converted_lines.append('<ul>')
+                    current_list_type = "ul"
+                markdown_text = re.sub(md["unorderedList"], r'<li>\1</li>', markdown_text)
+            else:
+                if current_list_type:
+                    converted_lines.append(f'</{current_list_type}>\n')
+                    current_list_type = None
+            
+            # Convert Código
+            markdown_text = re.sub(md["code"], r'<code>\1</code>', markdown_text)
+            
+            # Convert Linha Horizontal
+            markdown_text = re.sub(md["horizontalRule"], r'<hr>', markdown_text)
+            
+            # Convert Imagens
+            markdown_text = re.sub(md["image"], r'<img src="\2" alt="\1">', markdown_text)
+            
+            # Convert Links
+            markdown_text = re.sub(md["link"], r'<a href="\2">\1</a>', markdown_text)
+            
+            converted_lines.append(markdown_text)
 
-        
-        # Converter Código
+        if current_list_type:
+            converted_lines.append(f'</{current_list_type}>\n')
 
-        
-        # Converter Linha Horizontal
-
-        
-        # Converter Links
-
-        
-        # Converter Imagens
-
-    
-        return markdown_text
-
-
+        return ''.join(converted_lines)
