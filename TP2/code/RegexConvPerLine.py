@@ -4,6 +4,8 @@ class RegexConv:
     
     def markdown_to_html(markdown_text):
         
+        # Não dá para usar carrots (^) ou dollars sign ($) pq ele lê o ficheiro inteiro em vez de linha a linha
+        # Faz isso para poder criar a lista mais facilmente
         md = {
             "h1" : re.compile(r'#{1} (.+)'),
             "h1goat" : re.compile(r'(?<!#)#{1}(?!#) (.+)'),
@@ -14,7 +16,7 @@ class RegexConv:
             "bold" : re.compile(r'\*{2}(.+)\*{2}'),
             "italic" : re.compile(r'\*(.+)\*'),
             "italicgoat" : re.compile(r'(?<!\*)\*(?![*])([^*]*[^*])\*(?!\*)'),
-            "blockquote" : re.compile(r'')
+            "blockquote" : re.compile(r'\n+ *>+(.*)')
             
             
         }
@@ -30,7 +32,7 @@ class RegexConv:
         markdown_text = re.sub(md["bold"], r'<b>\1</b>', markdown_text)
 
         # Converter Blockquote
-        markdown_text = re.sub(md["blockquote"], r'<blockquote>\1</blockquote>', markdown_text)
+        markdown_text = re.sub(md["blockquote"], r'\n<blockquote>\1</blockquote>', markdown_text)
 
         
         # Converter Listas

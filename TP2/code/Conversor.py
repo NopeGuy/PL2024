@@ -1,5 +1,5 @@
 import os
-from RegexConv import RegexConv  
+from RegexConvFullFileRead import RegexConvFull  
 
 class Main:
     @staticmethod
@@ -24,7 +24,7 @@ class Main:
             try:
                 with open(file_path, 'r') as file:
                     markdown_text = file.read()
-                    html_output = RegexConv.markdown_to_html(markdown_text)
+                    html_output = RegexConvFull.markdown_to_html(markdown_text)
                     
                     output_path = os.path.join(output_folder, f"{os.path.splitext(file_name)[0]}.html")
                     
