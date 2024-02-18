@@ -3,7 +3,7 @@
 
 ## Descrição
 
-Neste projeto, desenvolvi um conversor de Markdown para HTML utilizando expressões regulares (regex). O conversor é capaz de transformar um arquivo Markdown num arquivo HTML válido.
+Neste TPC, foi desenvolvido um conversor de Markdown para HTML utilizando expressões regulares (regex). O conversor é capaz de transformar um ficheiro Markdown num ficheiro HTML válido.
 
 
 ## Instruções
