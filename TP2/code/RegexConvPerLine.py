@@ -5,9 +5,9 @@ class RegexConvPerLine:
     @staticmethod
     def markdown_to_html(file_path):
         md = {
-            "h1": re.compile(r'#\s*(.+)'),
-            "h2": re.compile(r'##\s*(.+)'),
-            "h3": re.compile(r'###\s*(.+)'),
+            "h1": re.compile(r'^#\s*(.+)'),
+            "h2": re.compile(r'^##\s*(.+)'),
+            "h3": re.compile(r'^###\s*(.+)'),
             "bold": re.compile(r'\*\*(.+?)\*\*'),
             "italic": re.compile(r'\*(.+?)\*'),
             "italicgoat": re.compile(r'\*(?![*])([^*]*[^*])\*(?!\*)'),

@@ -9,7 +9,7 @@ class RegexConvFull:
         md = {
             "h1" : re.compile(r'#{1} (.+)'),
             "h1goat" : re.compile(r'(?<!#)#{1}(?!#) (.+)'),
-            "h2" : re.compile(r'#{2} (.+)'),
+            "h2" : re.compile(r'^#{2} (.+)'),
             "h2goat" : re.compile(r'(?<!#)#{2}(?!#) (.+)'),
             "h3" : re.compile(r'#{3} (.+)'),
             "h3goat" : re.compile(r'(?<!#)#{3}(?!#) (.+)'),
@@ -39,8 +39,17 @@ class RegexConvFull:
         markdown_text = re.sub(md["blockquote"], r'\n\n<blockquote>\1</blockquote>', markdown_text)
 
         # Converter Listas
-        markdown_text = re.sub(md["orderedList"], r'\n<ol>\n<li>\1</li>\n</ol>', markdown_text)
-        markdown_text = re.sub(md["unorderedList"], r'\n<ul>\n<li>\1</li>\n</ul>', markdown_text)
+        # Unordered List
+        markdown_text = re.sub(r'^- (.*)$', r'<li>\1</li>', markdown_text, flags=re.MULTILINE)
+        markdown_text = re.sub(r'^ {4}- (.*)$', r'<ul>\n<li>\1</li>\n</ul>', markdown_text, flags=re.MULTILINE)
+        markdown_text = re.sub(r'(<li>.*)(\n<ul>.*</ul>)', r'\1\2', markdown_text, flags=re.DOTALL)
+        markdown_text = re.sub(r'((<li>.*</li>\n)+)', r'<ul>\n\1</ul>', markdown_text, flags=re.DOTALL)
+
+        # Ordered List
+        markdown_text = re.sub(r'^\d. (.*)$', r'<li>\1</li>', markdown_text, flags=re.MULTILINE)
+        markdown_text = re.sub(r'^ {4}- (.*)$', r'<ol>\n<li>\1</li>\n</ol>', markdown_text, flags=re.MULTILINE)
+        markdown_text = re.sub(r'(<li>.*)(\n<ol>.*</ol>)', r'\1\2', markdown_text, flags=re.DOTALL)
+        markdown_text = re.sub(r'((<li>.*</li>\n)+)', r'<ol>\n\1</ol>', markdown_text, flags=re.DOTALL)
 
         # Converter Código
         markdown_text = re.sub(md["code"], r'\n<code>\1</code>', markdown_text)
