@@ -11,13 +11,13 @@ class RegexConvPerLine:
             "bold": re.compile(r'\*\*(.+?)\*\*'),
             "italic": re.compile(r'\*(.+?)\*'),
             "italicgoat": re.compile(r'\*(?![*])([^*]*[^*])\*(?!\*)'),
-            "blockquote": re.compile(r'(?<!.)>\s*(.+)'),
+            "blockquote": re.compile(r'^\s*(?<!.)>\s*(.+)'),
             "orderedList": re.compile(r'\d+\. (.+)'),
             "unorderedList": re.compile(r'\- (.+)'),
             "code": re.compile(r'`(.+)`'),
-            "horizontalRule": re.compile(r'---'),
-            "link": re.compile(r'\[([^\]]+)\]\(([^\)]+)\)'),
-            "image": re.compile(r'!\[([^\]]+)\]\(([^\)]+)\)')
+            "horizontalRule": re.compile(r'^---'),
+            "link": re.compile(r'\[(.*)\]\((.*)\)'),
+            "image": re.compile(r'!\[(.*)\]\((.*)\)')
         }
         
         file = open(file_path, "r")
