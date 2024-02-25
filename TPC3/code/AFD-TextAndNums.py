@@ -52,3 +52,9 @@ three_chars = ""
 input_sequence2 = '456on+789ole345=off123='
 result2 = fsa.process_input(input_sequence2)
 print(f"Result for '{input_sequence2}': {result2}")
+
+fsa.reset
+three_chars = ""
+input_sequence3 = open('../input/texto.txt', 'r', encoding='utf-8').read()
+result3 = fsa.process_input(input_sequence3)
+print(f"Result for 'file': {result3}")
