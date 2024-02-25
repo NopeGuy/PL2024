@@ -18,6 +18,7 @@ class FiniteStateAutomaton:
 
         while i < len(input_text):
             three_chars = input_text[i:i+3]
+            sign = 1
 
             if input_text[i].lower() == 'o' and input_text[i+1].lower() == 'n':
                 i += 1  # Skip two characters after 'on' (one after the loop incrementation and another here)
@@ -29,10 +30,17 @@ class FiniteStateAutomaton:
                 print("Current sum:", self.sum_result)
             elif input_text[i] in self.alphabet:
                 if self.current_state == 'ON' and input_text[i].isdigit():
-                    while(input_text[i].isdigit()):
+                    self.temp_number = ''
+                    if i > 0 and input_text[i-1] == '-':
+                        sign = -1  # Set sign to negative if '-' is found before the number
+                    else:
+                        sign = 1  # Set sign to positive if '+' is found before the number or if no sign is found
+
+                    while(i < len(input_text) and input_text[i].isdigit()):
                         self.temp_number += input_text[i]
                         i += 1
-                    self.sum_result += int(self.temp_number)
+
+                    self.sum_result += sign * int(self.temp_number)
                     self.temp_number = ""
                     i -= 1  # Decrement counter by 1 to account for the incrementation inside the loop
 
@@ -45,7 +53,7 @@ class FiniteStateAutomaton:
 fsa = FiniteStateAutomaton()
 
 # Process input sequences
-input_sequence1 = '3on+1234=off456='
+input_sequence1 = '3on-1234=a89off456='
 result1 = fsa.process_input(input_sequence1)
 print(f"Result for '{input_sequence1}': {result1}")
 
