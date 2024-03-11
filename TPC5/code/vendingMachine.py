@@ -45,9 +45,9 @@ def moeda(moedas_inseridas):
             valor = moedasaceites[moeda]
             saldo += valor
             moedas_maquina.append(valor)
+            print(f"Saldo atual: {saldo}€\n")
         else:
-            print(f"Moeda inválida: {moeda}. Moedas aceites: {list(moedasaceites.keys())}")
-    print(f"Saldo atual: {saldo}€")
+            print(f"Moeda inválida: {moeda}. Moedas aceites: {list(moedasaceites.keys())}\n")
 
 def calcular_moedas_maquina(valor):
     moedas_disponiveis = []
@@ -56,7 +56,6 @@ def calcular_moedas_maquina(valor):
         while valor >= moeda:
             moedas_disponiveis.append(moeda)
             valor -= moeda
-            # update txt
             moedas_maquina.remove(moeda)
             file_path = os.getcwd() + '/TPC5/input/moedas.txt'
             with open(file_path, 'w') as file:
@@ -73,7 +72,6 @@ def selecionar(item_id):
             saldo -= item_info['Preço']
             print(f"\n| Novo saldo: {saldo}€ |")
             moedas_maquina.append(item_info['Preço'])
-            # update stock
             file_path = os.getcwd() + '/TPC5/input/stock.csv'
             with open(file_path, 'w', newline='') as file:
                 writer = csv.writer(file)
