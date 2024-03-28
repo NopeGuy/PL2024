@@ -37,16 +37,13 @@ def lex(characters):
 
 
 def main():
-    # the file input is outside the code folder and inside input folder
     current_directory = os.path.dirname(os.path.abspath(__file__))
     input_file = os.path.join(current_directory, '..', 'input', 'query.txt')
         
-    # Open and parse the text file
     with open(input_file, 'r') as file:
         tokens = lex(file.read().upper())
         print(tokens)
 
-        # React based on the tokens
         for token in tokens:
             if token['type'] == 'KEYWORD':
                 print(f"Keyword: {token['text']}")
